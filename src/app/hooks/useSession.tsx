@@ -1,26 +1,13 @@
-import { useCookies } from "react-cookie";
-import useSWR from "swr";
-import { fetchUser } from "../api/auth";
-import { useMemo } from "react";
-import { AuthStatus } from "@/types";
+import {LoginResponse, UserDataResponse} from "@/types/api";
+import {createContext, useContext} from "react";
 
-export const useSession = () => {
-  const [cookies, setCookie] = useCookies(["bearer_token"]);
+type SessionContextValue = {
+  user: UserDataResponse | null,
+  login: (email: string, password: string) => Promise<LoginResponse>;
+  setUser: (user: UserDataResponse | null) => void;
+}
 
-  const { data, mutate, error } = useSWR("api_user", () =>
-    fetchUser(cookies.bearer_token)
-  );
+// @ts-ignore
+export const SessionContext = createContext<SessionContextValue>({});
 
-  const loading = !data && !error;
-
-  const status = useMemo(() => {
-    if (loading) return AuthStatus.LOADING;
-    if (!loading && !error) return AuthStatus.AUTHORIZED;
-    return AuthStatus.UNAUTHORIZED;
-  }, [loading]);
-
-  return {
-    status,
-    user: data ? data.data : null,
-  };
-};
+export const useSessionContext = () => useContext(SessionContext);

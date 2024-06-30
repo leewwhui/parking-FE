@@ -1,16 +1,15 @@
 'use client';
 
 import React from "react";
-import { MobileNav } from "./mobile-nav";
+import {MobileNav} from "./mobile-nav";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { Icons } from "../icons";
-import { useSession } from "@/app/hooks/useSession";
-import { AuthStatus } from "@/types";
+import {Button} from "../ui/button";
+import {Icons} from "../icons";
+import {GuestProvider} from "@/app/providers/GuestProvider";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {AuthProvider} from "@/app/providers/AuthProvider";
 
 export const Header = () => {
-  const { status } = useSession();
-
   return (
     <header className="bg-white border-b">
       <nav
@@ -19,7 +18,7 @@ export const Header = () => {
       >
         <div className="flex lg:flex-1">
           <Link href="#" className="-m-1.5 p-1.5 flex items-center">
-            <Icons.logo />
+            <Icons.logo/>
           </Link>
 
           <div className="hidden lg:flex lg:gap-x-4 ml-10">
@@ -28,12 +27,19 @@ export const Header = () => {
             <Button>Company</Button>
           </div>
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {status === AuthStatus.UNAUTHORIZED ? (
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center">
+          <GuestProvider isRedirect={false}>
             <Link href="/login">
               <Button variant="default">Log in</Button>
             </Link>
-          ) : null}
+          </GuestProvider>
+
+          <AuthProvider isRedirect={false}>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn"/>
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </AuthProvider>
         </div>
         <MobileNav></MobileNav>
       </nav>

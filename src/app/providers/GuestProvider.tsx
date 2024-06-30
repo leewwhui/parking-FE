@@ -1,21 +1,24 @@
 'use client';
 
-import React, {FC, Fragment, ReactNode, useContext} from 'react'
-import {SessionContext} from "@/app/providers/SessionProvider";
+import React, {FC, Fragment, ReactNode} from 'react'
 import {redirect} from "next/navigation";
+import {useSessionContext} from "@/app/hooks/useSession";
 
 interface GuestProviderProps {
-  children: ReactNode
+  children: ReactNode;
+  isRedirect?: boolean;
 }
 
 export const GuestProvider: FC<GuestProviderProps> = (props) => {
-  const user = useContext(SessionContext);
+  const {children, isRedirect = true} = props;
+  const {user} = useSessionContext();
 
-  if (user) return redirect('/');
+  if (user && isRedirect) return redirect('/');
+  if (user && !isRedirect) return null;
 
   return (
     <Fragment>
-      {props.children}
+      {children}
     </Fragment>
   )
 }

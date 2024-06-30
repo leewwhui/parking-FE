@@ -1,9 +1,9 @@
-import type {Metadata} from "next";
-import {Lato} from "next/font/google";
+import type { Metadata } from "next";
+import { Lato } from "next/font/google";
 import "./globals.css";
-import React, {FC} from "react";
-import {Toaster} from "@/components/ui/toaster";
-import {SessionProvider} from "@/app/providers/SessionProvider";
+import React, { FC, useEffect } from "react";
+import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "@/app/providers/SessionProvider";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -20,16 +20,14 @@ interface RootLayoutProps {
 }
 
 const RootLayout: FC<RootLayoutProps> = (props) => {
-  const {children} = props;
+  const { children } = props;
 
   return (
     <html lang="en">
-    <body className={lato.className}>
-    <SessionProvider>
-      {children}
-    </SessionProvider>
-    <Toaster/>
-    </body>
+      <body className={lato.className}>
+        <SessionProvider>{children}</SessionProvider>
+        <Toaster />
+      </body>
     </html>
   );
 };

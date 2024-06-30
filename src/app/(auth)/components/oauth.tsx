@@ -5,12 +5,12 @@ export const OAuth = () => {
   return (
     <div className="flex justify-between gap-3">
       <Button variant='outline' className="w-full bg-background space-x-2">
-        <Icons.github></Icons.github>
+        <Icons.github />
         <span>Github</span>
       </Button>
 
       <Button variant='outline' className="w-full bg-background space-x-2">
-        <Icons.google></Icons.google>
+        <Icons.google />
         <span>Google</span>
       </Button>
     </div>

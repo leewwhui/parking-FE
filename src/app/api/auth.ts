@@ -1,31 +1,21 @@
-import {UserDataResponse} from "@/types/api";
+import {LoginResponse, UserDataResponse} from "@/types/api";
+import {AxiosResponse} from 'axios';
+import {axios_instance} from "@/app/api/index";
 
 export const fetchUser = async (
   cookie: string
-): Promise<{ data: UserDataResponse }> => {
-  const data = await fetch("http://127.0.0.1:8000/api/user", {
-    method: "get",
+) => {
+  const user: AxiosResponse<UserDataResponse> = await axios_instance.get<UserDataResponse>('/user', {
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${cookie}`,
-    },
+      'Authorization': `Bearer ${cookie}`,
+      'Content-Type': 'application/json'
+    }
   });
 
-  return data.json();
-};
+  return user.data;
+}
 
-// export const loginUser = async (
-//   email: string,
-//   password: string
-// ): Promise<loginResponse> => {
-//   const data = await fetch("http://127.0.0.1:8000/api/login", {
-//     method: "post",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Accept: "application/json",
-//     },
-//     body: JSON.stringify({email, password}),
-//   });
-//
-//   return data.json();
-// };
+export const login = async (email: string, password: string): Promise<LoginResponse> => {
+  const data = await axios_instance.post("/login", {email, password});
+  return data.data;
+}
