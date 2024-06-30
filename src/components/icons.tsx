@@ -6,6 +6,7 @@ import {
   IconEyeClosed,
   IconEye,
   IconSearch,
+  IconLogout,
 } from "@tabler/icons-react";
 
 export const Icons = {
@@ -14,5 +15,6 @@ export const Icons = {
   google: (props: IconProps) => <IconBrandGoogleFilled {...props} />,
   eyeClose: (props: IconProps) => <IconEyeClosed {...props} />,
   eyeOpen: (props: IconProps) => <IconEye {...props} />,
-  search: (props: IconProps) => <IconSearch {...props} />
+  search: (props: IconProps) => <IconSearch {...props} />,
+  logout: (props: IconProps) => <IconLogout {...props} />,
 };

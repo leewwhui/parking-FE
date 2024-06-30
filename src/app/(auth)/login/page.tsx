@@ -21,7 +21,7 @@ const page = () => {
           <CardDescription>
             Choose your preferred sign in method
           </CardDescription>
-          <OAuth></OAuth>
+          <OAuth />
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="relative">

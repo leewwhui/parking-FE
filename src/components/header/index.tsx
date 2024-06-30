@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
 import React from "react";
-import {MobileNav} from "./mobile-nav";
+import { MobileNav } from "./mobile-nav";
 import Link from "next/link";
-import {Button} from "../ui/button";
-import {Icons} from "../icons";
-import {GuestProvider} from "@/app/providers/GuestProvider";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {AuthProvider} from "@/app/providers/AuthProvider";
+import { Button } from "../ui/button";
+import { Icons } from "../icons";
+import { GuestProvider } from "@/app/providers/GuestProvider";
+import { AuthProvider } from "@/app/providers/AuthProvider";
+import { Profile } from "./profile";
 
 export const Header = () => {
   return (
@@ -18,7 +18,7 @@ export const Header = () => {
       >
         <div className="flex lg:flex-1">
           <Link href="#" className="-m-1.5 p-1.5 flex items-center">
-            <Icons.logo/>
+            <Icons.logo />
           </Link>
 
           <div className="hidden lg:flex lg:gap-x-4 ml-10">
@@ -35,13 +35,10 @@ export const Header = () => {
           </GuestProvider>
 
           <AuthProvider isRedirect={false}>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn"/>
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <Profile />
           </AuthProvider>
         </div>
-        <MobileNav></MobileNav>
+        <MobileNav />
       </nav>
     </header>
   );

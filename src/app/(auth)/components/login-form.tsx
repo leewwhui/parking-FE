@@ -7,7 +7,9 @@ import { Label } from "@/components/ui/label";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { useSessionContext } from "@/app/hooks/useSession";
+import { login } from "@/app/api/auth";
+import { useSessionStore } from "@/app/store";
+import { useToken } from "@/app/hooks/useToken";
 
 type FormData = {
   email: string;
@@ -16,24 +18,27 @@ type FormData = {
 
 export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
-  const { login, setUser } = useSessionContext();
+  const store = useSessionStore();
+  const { setToken } = useToken();
 
   const onSubmit = async (values: FormData) => {
-    setLoading(true);
-    const data = await login(values.email, values.password);
-    setLoading(false);
-
-    if (data && data.code === 200) {
-      const key = process.env.AUTH_TOKEN as string;
-      localStorage.setItem(key, data.token);
-      setUser(data.data);
+    // setLoading(true);
+    try {
+      const data = await login(values.email, values.password);
+    } catch (error) {
+      console.log(error);
     }
+    // if (data && data.code === 200) {
+    //   setToken(data.token);
+    //   store.login(data.data);
+    // }
+    // setLoading(false);
   };
 
   const formik = useFormik<FormData>({
     initialValues: {
-      email: "test@example.com",
-      password: "971213",
+      email: "",
+      password: "",
     },
     onSubmit: onSubmit,
   });
