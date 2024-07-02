@@ -10,23 +10,41 @@ import {
   RegisterRequestData,
   RegisterResponse,
 } from "@/types/api";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { ErrorLabel } from "./error-label";
+import { ErrorMessage } from "./error-message";
+import { Loading } from "@/components/loading";
 
 export const RegisterForm = () => {
   const router = useRouter();
-  const [error, setError] = useState<RegisterErrorResponse | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (values: RegisterRequestData) => {
+  const onSubmit = async (
+    values: RegisterRequestData,
+    helpers: FormikHelpers<RegisterRequestData>
+  ) => {
     try {
+      setLoading(true);
       const data = (await register(values)) as RegisterResponse;
       toast.success(data.message);
       router.replace("/login");
     } catch (error: any) {
-      setError(error.response.data);
+      const errorData = error.response.data as RegisterErrorResponse;
+      const name = errorData.errors?.name || [""];
+      const email = errorData.errors?.email || [""];
+      const password = errorData.errors?.password || [""];
+      const confirm = errorData.errors?.password_confirmation || [""];
+
+      helpers.setErrors({
+        name: name[0],
+        email: email[0],
+        password: password[0],
+        password_confirmation: confirm[0],
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,7 +69,7 @@ export const RegisterForm = () => {
           value={formik.values.name}
         />
 
-        <ErrorLabel error={error} name="name" />
+        {formik.errors.name && <ErrorMessage message={formik.errors.name} />}
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -63,7 +81,7 @@ export const RegisterForm = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
-        <ErrorLabel error={error} name="email" />
+        {formik.errors.email && <ErrorMessage message={formik.errors.email} />}
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -74,7 +92,9 @@ export const RegisterForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        <ErrorLabel error={error} name="password" />
+        {formik.errors.password && (
+          <ErrorMessage message={formik.errors.password} />
+        )}
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -85,10 +105,18 @@ export const RegisterForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password_confirmation}
         />
-        <ErrorLabel error={error} name="password_confirmation" />
+        {formik.errors.password_confirmation && (
+          <ErrorMessage message={formik.errors.password_confirmation} />
+        )}
       </div>
 
-      <Button type="submit" className="w-full" variant="default">
+      <Button
+        type="submit"
+        className="w-full"
+        variant="default"
+        disabled={loading}
+      >
+        <Loading loading={loading} />
         Submit
       </Button>
     </form>

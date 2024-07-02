@@ -13,18 +13,18 @@ export interface LoginResponse {
 export interface LoginErrorResponse {
   message: string;
   errors: {
-    email: string[];
-    password: string[];
+    email?: string[];
+    password?: string[];
   };
 }
 
 export interface RegisterErrorResponse {
   message: string;
   errors: {
-    name: string[];
-    email: string[];
-    password: string[];
-    password_confirmation: string[];
+    name?: string[];
+    email?: string[];
+    password?: string[];
+    password_confirmation?: string[];
   };
 }
 

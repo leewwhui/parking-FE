@@ -24,7 +24,7 @@ export const Profile = () => {
         <Button variant="ghost" className="size-8 rounded-full">
           <Avatar className="size-8">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

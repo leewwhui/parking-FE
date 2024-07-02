@@ -2,7 +2,6 @@ import {Header} from "@/components/header";
 import {LobbySearch} from "./search";
 
 const Home = () => {
-
   return (
     <div>
       <Header></Header>

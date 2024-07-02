@@ -4,35 +4,45 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import { useState } from "react";
 import { login } from "@/app/api/auth";
 import { useSessionStore } from "@/app/store";
 import { useToken } from "@/app/hooks/useToken";
-import { Icons } from "@/components/icons";
 import {
   LoginErrorResponse,
   LoginRequestData,
   LoginResponse,
 } from "@/types/api";
-import { ErrorLabel } from "./error-label";
+import { ErrorMessage } from "./error-message";
+import { Loading } from "@/components/loading";
 
 export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const store = useSessionStore();
   const { setToken } = useToken();
-  const [error, setError] = useState<LoginErrorResponse | null>(null);
 
-  const onSubmit = async (values: LoginRequestData) => {
-    setLoading(true);
+  const onSubmit = async (
+    values: LoginRequestData,
+    helpers: FormikHelpers<LoginRequestData>
+  ) => {
     try {
+      setLoading(true);
       const data = (await login(values)) as LoginResponse;
       setToken(data.token);
       store.login(data.data);
     } catch (error: any) {
-      setError(error.response.data);
+      const errorData = error.response.data as LoginErrorResponse;
+      const email = errorData.errors?.email || [""];
+      const password = errorData.errors?.password || [""];
+
+      helpers.setErrors({
+        email: email[0],
+        password: password[0],
+      });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const formik = useFormik<LoginRequestData>({
@@ -54,7 +64,7 @@ export const LoginForm = () => {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
-        <ErrorLabel error={error} name="email" />
+        {formik.errors.email && <ErrorMessage message={formik.errors.email} />}
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -65,7 +75,7 @@ export const LoginForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        <ErrorLabel error={error} name="password" />
+        {formik.errors.password && <ErrorMessage message={formik.errors.password} />}
       </div>
 
       <Button
@@ -74,11 +84,7 @@ export const LoginForm = () => {
         variant="default"
         disabled={loading}
       >
-        <Icons.loading
-          className={`mr-2 h-4 w-4 animate-spin ${
-            loading ? "block" : "hidden"
-          }`}
-        />
+        <Loading loading={loading} />
         Submit
       </Button>
     </form>
