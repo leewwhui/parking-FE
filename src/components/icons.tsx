@@ -7,6 +7,8 @@ import {
   IconEye,
   IconSearch,
   IconLogout,
+  IconLadder,
+  IconLoader2,
 } from "@tabler/icons-react";
 
 export const Icons = {
@@ -17,4 +19,5 @@ export const Icons = {
   eyeOpen: (props: IconProps) => <IconEye {...props} />,
   search: (props: IconProps) => <IconSearch {...props} />,
   logout: (props: IconProps) => <IconLogout {...props} />,
+  loading: (props: IconProps) => <IconLoader2 {...props} />,
 };

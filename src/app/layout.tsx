@@ -1,9 +1,9 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
-import "./globals.css";
 import React, { FC } from "react";
-import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "./providers/SessionProvider";
+import { Toaster } from "react-hot-toast";
 
 const lato = Lato({
   subsets: ["latin"],

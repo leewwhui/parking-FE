@@ -1,4 +1,11 @@
-import { LoginResponse, UserDataResponse } from "@/types/api";
+import {
+  LoginErrorResponse,
+  LoginRequestData,
+  LoginResponse,
+  RegisterErrorResponse,
+  RegisterRequestData,
+  UserDataResponse,
+} from "@/types/api";
 import { axios_instance } from "@/app/api/index";
 
 export const fetchUser = async (cookie: string) => {
@@ -13,9 +20,15 @@ export const fetchUser = async (cookie: string) => {
 };
 
 export const login = async (
-  email: string,
-  password: string
-): Promise<LoginResponse> => {
-  const data = await axios_instance.post("/login", { email, password });
+  values: LoginRequestData
+): Promise<LoginResponse | LoginErrorResponse> => {
+  const data = await axios_instance.post("/login", values);
+  return data.data;
+};
+
+export const register = async (
+  values: RegisterRequestData
+): Promise<RegisterRequestData | RegisterErrorResponse> => {
+  const data = await axios_instance.post("/register", values);
   return data.data;
 };

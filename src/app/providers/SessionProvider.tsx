@@ -3,6 +3,8 @@
 import React, { FC, Fragment, ReactNode, useEffect, useState } from "react";
 import { useSessionStore } from "../store";
 import { fetchUser } from "../api/auth";
+import Loading from "../loading";
+import { useToken } from "../hooks/useToken";
 
 interface SessionProviderProps {
   children: ReactNode;
@@ -11,20 +13,19 @@ interface SessionProviderProps {
 export const SessionProvider: FC<SessionProviderProps> = (props) => {
   const { login } = useSessionStore();
   const [loading, setLoading] = useState(true);
+  const { token } = useToken();
   const { children } = props;
 
   useEffect(() => {
-    const auth_token = process.env.AUTH_TOKEN as string;
-    const cookie = localStorage.getItem(auth_token);
-    if (!cookie) setLoading(false);
+    if (!token) setLoading(false);
     else {
-      fetchUser(cookie)
+      fetchUser(token)
         .then((data) => login(data))
         .finally(() => setLoading(false));
     }
   }, []);
 
-  if (loading) return null;
+  if (loading) return <Loading />;
 
   return <Fragment>{children}</Fragment>;
 };
