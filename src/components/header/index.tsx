@@ -5,9 +5,9 @@ import { MobileNav } from "./mobile-nav";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
-import { GuestProvider } from "@/app/providers/GuestProvider";
-import { AuthProvider } from "@/app/providers/AuthProvider";
 import { Profile } from "./profile";
+import { GuestProvider } from "@/providers/GuestProvider";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 export const Header = () => {
   return (
@@ -29,7 +29,7 @@ export const Header = () => {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center">
           <GuestProvider isRedirect={false}>
-            <Link href="/login">
+            <Link href="/auth/login">
               <Button variant="default">Log in</Button>
             </Link>
           </GuestProvider>

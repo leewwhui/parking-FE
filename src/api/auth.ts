@@ -6,7 +6,7 @@ import {
   RegisterRequestData,
   UserDataResponse,
 } from "@/types/api";
-import { axios_instance } from "@/app/api/index";
+import { axios_instance } from ".";
 
 export const fetchUser = async (cookie: string) => {
   const user = await axios_instance.get<{ data: UserDataResponse }>("/user", {

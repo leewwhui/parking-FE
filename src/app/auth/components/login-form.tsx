@@ -6,9 +6,8 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { FormikHelpers, useFormik } from "formik";
 import { useState } from "react";
-import { login } from "@/app/api/auth";
-import { useSessionStore } from "@/app/store";
-import { useToken } from "@/app/hooks/useToken";
+import { useSessionStore } from "@/store";
+import { useToken } from "@/hooks/useToken";
 import {
   LoginErrorResponse,
   LoginRequestData,
@@ -16,6 +15,7 @@ import {
 } from "@/types/api";
 import { ErrorMessage } from "./error-message";
 import { Loading } from "@/components/loading";
+import { login } from "@/api/auth";
 
 export const LoginForm = () => {
   const [loading, setLoading] = useState(false);

@@ -1,10 +1,10 @@
 "use client";
 
 import React, { FC, Fragment, ReactNode, useEffect, useState } from "react";
-import { useSessionStore } from "../store";
 import { fetchUser } from "../api/auth";
-import Loading from "../loading";
-import { useToken } from "../hooks/useToken";
+import { useSessionStore } from "@/store";
+import { useToken } from "@/hooks/useToken";
+import Loading from "@/app/loading";
 
 interface SessionProviderProps {
   children: ReactNode;

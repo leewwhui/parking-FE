@@ -43,7 +43,7 @@ const page = () => {
             </span>
             <Link
               aria-label="Sign up"
-              href="/register"
+              href="/auth/register"
               className="text-primary underline-offset-4 transition-colors hover:underline"
             >
               Register

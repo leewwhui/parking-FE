@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import {Icons} from "@/components/icons";
+import { Icons } from "@/components/icons";
+import { GuestProvider } from "@/providers/GuestProvider";
 import Link from "next/link";
-import {GuestProvider} from "@/app/providers/GuestProvider";
 
-export default function AuthLayout({children}: React.PropsWithChildren) {
+export default function AuthLayout({ children }: React.PropsWithChildren) {
   return (
     <GuestProvider>
       <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2 overflow-hidden">
         <main className="flex items-center justify-center relative">
           <Link href="/" className="flex items-center absolute left-4 top-4">
-            <Icons.logo size={26}/>
+            <Icons.logo size={26} />
           </Link>
 
           {children}

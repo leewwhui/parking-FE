@@ -7,7 +7,6 @@ import {
   IconEye,
   IconSearch,
   IconLogout,
-  IconLadder,
   IconLoader2,
 } from "@tabler/icons-react";
 

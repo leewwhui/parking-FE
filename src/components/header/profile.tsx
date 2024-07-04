@@ -11,8 +11,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
-import { useSessionStore } from "@/app/store";
-import { useToken } from "@/app/hooks/useToken";
+import { useSessionStore } from "@/store";
+import { useToken } from "@/hooks/useToken";
 
 export const Profile = () => {
   const { logout, user } = useSessionStore();

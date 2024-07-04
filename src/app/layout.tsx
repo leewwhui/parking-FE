@@ -1,8 +1,8 @@
+import { SessionProvider } from "@/providers/SessionProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import React, { FC } from "react";
-import { SessionProvider } from "./providers/SessionProvider";
 import { Toaster } from "react-hot-toast";
 
 const lato = Lato({

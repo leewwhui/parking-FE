@@ -1,6 +1,5 @@
 "use client";
 
-import { register } from "@/app/api/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +15,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ErrorMessage } from "./error-message";
 import { Loading } from "@/components/loading";
+import { register } from "@/api/auth";
 
 export const RegisterForm = () => {
   const router = useRouter();

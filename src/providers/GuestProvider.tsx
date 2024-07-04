@@ -2,7 +2,7 @@
 
 import React, { FC, Fragment, ReactNode } from "react";
 import { redirect } from "next/navigation";
-import { useSessionStore } from "../store";
+import { useSessionStore } from "@/store";
 
 interface GuestProviderProps {
   children: ReactNode;
